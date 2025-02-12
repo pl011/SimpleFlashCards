@@ -57,14 +57,15 @@ namespace FlashCards
                 activeCardFront = reader.GetString(0);
                 activeCardBack = reader.GetString(1);
 
-                UpdateDisplayedCard(false);                
+                isShowingBack = false;
+                UpdateDisplayedCard();                
             }    
         }
 
         private void DoFlipCard(object? obj)
         {
             isShowingBack = !isShowingBack;
-            UpdateDisplayedCard(isShowingBack);
+            UpdateDisplayedCard();
         }
 
         private void Notify(string name)
@@ -72,9 +73,9 @@ namespace FlashCards
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
-        private void UpdateDisplayedCard(bool isBack)
+        private void UpdateDisplayedCard()
         {
-            if (isBack)
+            if (isShowingBack)
             {
                 DisplayedCardText = activeCardBack;
             }
