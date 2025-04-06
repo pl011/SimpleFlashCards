@@ -12,14 +12,13 @@ namespace FlashCards
 {
     public class ViewModel : INotifyPropertyChanged
     {
-        private SQLiteConnection sqliteConnection;
-
-        private const string DatabaseName = "Cards.db";
+        private string DatabaseName = Properties.Settings.Default.DatabaseFile;
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
         public RelayCommand ShowRandomCard => new RelayCommand(DoShowRandomCard);
         public RelayCommand FlipCard => new RelayCommand(DoFlipCard);
+        public RelayCommand OpenDatabaseSelectionWindow => new RelayCommand(DoOpenDatabaseSelectionWindow);
 
         public string DisplayedCardText
         {
@@ -32,16 +31,14 @@ namespace FlashCards
 
         public ViewModel()
         {
-            // Connect to database
-            sqliteConnection = new SQLiteConnection("Data Source=" + DatabaseName);
-            sqliteConnection.Open();
+            DatabaseManager.ConnectToDatabase();
 
             isShowingBack = false;
         }
 
         private void DoShowRandomCard(object? obj)
         {
-            var command = sqliteConnection.CreateCommand();
+            var command = DatabaseManager.DatabaseConnection.CreateCommand();
 
             command.CommandText =
             @"
@@ -66,6 +63,13 @@ namespace FlashCards
         {
             isShowingBack = !isShowingBack;
             UpdateDisplayedCard();
+        }
+
+        private void DoOpenDatabaseSelectionWindow(object? obj)
+        {
+            DatabaseFileSelectWindow window = new DatabaseFileSelectWindow();
+
+            window.ShowDialog();
         }
 
         private void Notify(string name)

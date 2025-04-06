@@ -1,0 +1,9 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="FlashCards.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="DatabaseFile" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Cards.db</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
